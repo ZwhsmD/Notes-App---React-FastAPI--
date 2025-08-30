@@ -25,7 +25,7 @@ app.add_middleware(
 )
 react_build_dir = os.path.join(os.path.dirname(__file__), "TheNotesApp", "React", "notes-app", "build")
 
-app.mount("/static", StaticFiles(directory=os.path.join(react_build_dir, "static")), name="static")
+app.mount("/static/", StaticFiles(directory=os.path.join(react_build_dir, "static")), name="static")
 
 models.Base.metadata.create_all(bind=engine)
 
