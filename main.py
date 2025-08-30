@@ -24,7 +24,7 @@ app.add_middleware(
     allow_methods=["*"],
 )
 
-app.mount("/static", StaticFiles(directory="./React/notes-app/build/static"), name="static")
+app.mount("/static", StaticFiles(directory="TheNotesApp/React/notes-app/build/static"), name="static")
 
 models.Base.metadata.create_all(bind=engine)
 
