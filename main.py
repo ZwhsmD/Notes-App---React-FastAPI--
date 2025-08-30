@@ -6,6 +6,9 @@ from database import SessionLocal, engine
 from sqlalchemy.orm import Session
 import models
 from typing_extensions import Annotated, List
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+import os
 
 app = FastAPI()
 
@@ -20,6 +23,8 @@ app.add_middleware(
     allow_headers=["*"],
     allow_methods=["*"],
 )
+
+app.mount("/static", StaticFiles(directory="./React/notes-app/build/static"), name="static")
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -80,3 +85,7 @@ def update_note(note_id: int, note: NoteModel, db : Session = Depends(get_db)):
     db.commit()
     db.refresh(db_note)
     return db_note
+
+@app.get("/{full_path:path}")
+async def serve_react_app(full_path: str):
+    return FileResponse(os.path.join("build", "index.html"))
