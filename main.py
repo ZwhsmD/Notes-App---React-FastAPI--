@@ -89,4 +89,5 @@ def update_note(note_id: int, note: NoteModel, db : Session = Depends(get_db)):
 
 @app.get("/{full_path:path}")
 async def serve_react_app(full_path: str):
-    return FileResponse(os.path.join("build", "index.html"))
+    index_path = os.path.join(react_build_dir, "index.html")
+    return FileResponse(index_path)
